@@ -11,6 +11,7 @@ import "./inventarios.css";
 import Modal from "../modal/Modal.jsx";
 import EditarProductos from "./EditarProductos";
 import AgregarProducto from "./AgregarProducto.jsx";
+import { showAlertError } from "../../alert/alerts.js";
 
 function Inventario() {
   const [products, setProductos] = useState([]);
@@ -52,6 +53,22 @@ function Inventario() {
 
   //Ejecuta la peticion y le pasa los paramentros necesarios
   const handleAddProducts = (name, price, image, type) => {
+    if (!name) {
+      showAlertError("Ingrese el nombre del producto");
+      return;
+    }
+    if (!price) {
+      showAlertError("Ingrese el costo del producto");
+      return;
+    }
+    if (!image) {
+      showAlertError("Ingrese la imagen del producto");
+      return;
+    }
+    if (!type || type == "ELIGE EL TIPO DE COMIDA") {
+      showAlertError("selecione el tipo de comida");
+      return;
+    }
     const body = { name, price, image, type };
     const options = {
       onSuccess: () => {
